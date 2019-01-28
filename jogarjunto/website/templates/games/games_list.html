@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    Hi {{ user.username }}!
+    <p><a href="{% url 'logout' %}">logout</a></p>
+    {% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">login</a>
+    {% endif %}
+    <h1>Jogos de Futebol:</h1>
+    {% for each_game in games_futebol %}
+        <p>{{each_game}}</p>
+    {% endfor %}
+    <hr>
+    <h1>Jogos de Paintball:</h1>
+    {% for each_game in games_paintball %}
+        <p>{{each_game}}</p>
+    {% endfor %}
+    <hr>
+    <h1>Jogos de LOL:</h1>
+    {% for each_game_futebol in games_lol %}
+        <p>{{each_game}}</p>
+    {% endfor %}
+{% endblock %}

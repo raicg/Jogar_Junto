@@ -7,10 +7,12 @@ class Games(models.Model):
     online = models.BooleanField()
     teamxteam = models.BooleanField()
     team_players = models.IntegerField()
-    address = models.TextField()
+    address = models.TextField(null = True, blank = True)
+    url = models.URLField(null = True, blank = True)
     created_at = models.DateTimeField(
         default=timezone.now
     )
-    when = models.DateTimeField()
+    when_date = models.DateField()
+    when_time = models.TimeField()
     game_type = models.IntegerField()
 

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% include "navbar.html" %}
+
+    <div class="container">
+        {% if user.is_authenticated %}
+
+            <form method="POST" class="AddGameForm">
+                {% csrf_token %}
+                <div class="fieldWrapper">
+                <label>Jogo online ?</label><br><br>
+                <div class="columns is-multiline is-mobile is-desktop">
+                    <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                        <input type="radio" name="online" value="True"><br>Sim
+                    </div>
+                    <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                        <input type="radio" name="online" value="False"><br>Não
+                    </div>
+                    {{ form.online.errors }}
+                </div>
+                <hr>
+                <label>Quantos times ?</label><br><br>
+                <div class="columns is-multiline is-mobile is-desktop">
+                    <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                        <input type="radio" name="teamxteam" value="False"><br>1
+                    </div>
+                    <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                        <input type="radio" name="teamxteam" value="True"><br>2
+                    </div>
+                {{ form.teamxteam.errors }}
+                </div>
+                <hr>
+                <label>Quantos jogadores por time ?</label><br><br>
+                <input type="number" name="team_players" min="1" max="12" step="1">
+                {{ form.team_players.errors }}
+                <hr>
+                <label>Qual o endereço ?</label><br><br>
+                <input type="text" name="address">
+                {{ form.address.errors }}
+                <hr>
+                <label>Qual o link(url) ?</label><br><br>
+                <input type="url" name="url">
+                {{ form.url.errors }}
+                <hr>
+                <label>Qual dia ?</label><br><br>
+                <input type="date" name="when_date">
+                {{ form.when_date.errors }}
+                <hr>
+                <label>Qual hora ?</label><br><br>
+                <input type="time" name="when_time">
+                {{ form.when_time.errors }}
+                <hr>
+                <label>Qual o jogo ?</label><br><br>
+                <div class="columns is-multiline is-mobile is-desktop">
+                    <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
+                        <input type="radio" name="game_type" value="1"><br>Futebol
+                    </div>
+                    <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
+                        <input type="radio" name="game_type" value="2"><br>Paintball
+                    </div>
+                    <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
+                        <input type="radio" name="game_type" value="3"><br>LOL
+                    </div>
+                    <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
+                        <input type="radio" name="game_type" value="4"><br>DOTA2
+                    </div>
+                    {{ form.game_type.errors }}
+                </div>
+                <hr>
+                <button type="submit">Save</button>
+            </form>
+
+        {% else %}
+            <p>You are not logged in</p>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+

@@ -4,13 +4,13 @@
 
   <div class="container">
 
-    <h1 class="title">{{ user_details.first_name }} {{ user_details.last_name }}</h1>
+    <h1 class="title">{{ user_detail.first_name }} {{ user_detail.last_name }}</h1>
     <br>
     <p>Email:</p>
-    <p>{{ user_details.email }}</p>
+    <p>{{ user_detail.email }}</p>
     <br>
     <p>Telefone:</p>
-    <p>{{ user_details.phone_number }}</p>
+    <p>{{ user_detail.phone_number }}</p>
     <br>
     <p>Jogos:</p>
     {% for each_game in user_games %}

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <script type="text/javascript">
+        function showUserDetails(url) {
+        newwindow=window.open(url,'name','height=600,width=520,top=200,left=700,resizable');
+        if (window.focus) {newwindow.focus()}
+        }
+    </script>
+
+    {% include "navbar.html" %}
+
+    <div class="container">
+        {% if user.is_authenticated %}
+            <div class="content is-large">
+                <h1 class="title">Detalhes do jogo:</h1>    
+            </div>
+            <br>
+            {% if game_detail.game_type == 1 %}
+                <p>Tipo de jogo:</p>
+                <p>Futebol</p>
+            {% elif game_detail.game_type == 2 %}
+                <p>Tipo de jogo:</p>
+                <p>Paintball</p>
+            {% elif game_detail.game_type == 3 %}
+                <p>Tipo de jogo:</p>
+                <p>LOL</p>
+            {% elif game_detail.game_type == 4 %}
+                <p>Tipo de jogo:</p>
+                <p>DOTA 2</p>
+            {% else %}
+                <p>Tipo de jogo: INVALIDO</p>
+            {% endif %}
+            <br>
+            <p>Endereço:</p>
+            {% if game_detail.online == 0 %}
+                <p>{{ game_detail.address }}</p>
+            {% else %}
+                <p><a href="{{ game_detail.url }}" target="_blank">{{ game_detail.url }}</a></p>
+            {% endif %}
+            <br>
+            <p>{{ game_detail.when_date }} - {{ game_detail.when_time }}</p>
+            <hr>
+            {% if game_detail.teamxteam == 1 %}
+            <div class="columns is-multiline is-mobile is-desktop">
+                <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                    {% for each_player in players_team1 %}
+                        <a href="{% url 'user_details' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
+                            <p class="each_player_team1">{{ each_player.first_name }} {{ each_player.last_name }}</p> 
+                        </a>   
+                    {% endfor %}
+                </div>
+                <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                    {% for each_player in players_team2 %}
+                        <a href="{% url 'user_details' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
+                            <p class="each_player_team2">{{ each_player.first_name }} {{ each_player.last_name }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+                {% if size_team1 and size_team2 < game_detail.team_players %}
+                    <hr>
+                    <a class="icon plus" href="{% url 'game_list' %}">
+                        <span class="icon is-large is-fixed-bottom is-size-1">
+                            <i class="fas fa-plus-circle"></i>
+                        </span>
+                    </a>
+                {% endif %}
+
+            {% else %}
+            <div class="columns is-multiline is-mobile is-desktop">
+                <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                    {% for each_player in players_team1 %}
+                        <a href="{% url 'user_details' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
+                            <p class="each_player_teamonly">{{ each_player.first_name }} {{ each_player.last_name }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+
+                {% if size_team1 < game_detail.team_players %}
+                    <hr>
+                    <a class="icon plus" href="{% url 'game_list' %}">
+                        <span class="icon is-large is-fixed-bottom is-size-1">
+                            <i class="fas fa-plus-circle"></i>
+                        </span>
+                    </a>
+                {% endif %}
+
+            {% endif %}
+
+
+
+        {% else %}
+            <p>You are not logged in</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+

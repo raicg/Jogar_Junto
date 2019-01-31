@@ -1,9 +1,9 @@
 from django import forms
 
-from games.models import Games
+from game.models import Game
 
 class AddGameForm(forms.ModelForm):
 
     class Meta:
-        model = Games
+        model = Game
         fields = ('online', 'teamxteam', 'team_players', 'address', 'url', 'when_date', 'when_time', 'game_type',)

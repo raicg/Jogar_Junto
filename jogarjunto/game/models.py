@@ -2,8 +2,9 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 
-class Games(models.Model):
-    players = models.ManyToManyField("accounts.MyUser", related_name='players')
+class Game(models.Model):
+    players_team1 = models.ManyToManyField("accounts.MyUser", related_name='players_team1')
+    players_team2 = models.ManyToManyField("accounts.MyUser", related_name='players_team2', blank = True)
     online = models.BooleanField()
     teamxteam = models.BooleanField()
     team_players = models.IntegerField()

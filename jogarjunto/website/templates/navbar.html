@@ -13,6 +13,7 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
+                <p class="dropdown-item"><a href="{% url 'game_list' %}">Inicio</a></p>
                 <p class="dropdown-item"><a href="{% url 'add_game' %}">Adicionar Jogo</a></p>
                 <hr class="dropdown-divider">
                 <p class="dropdown-item"><a href="{% url 'logout' %}">Logout</a></p>
@@ -20,7 +21,8 @@
             </div>
         </div>
         {% else %}
-        <a href="{% url 'login' %}" class="is-pulled-right has-text-weight-bold">Login</a>         
+        <a href="{% url 'login' %}" class="button is-outlined is-pulled-right is-white">
+            Login</a>         
         {% endif %}
     </div>
 </nav>

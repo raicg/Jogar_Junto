@@ -103,6 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-website/static/avatars/*
+jogarjunto/website/static/avatars/*
 !jogarjunto/website/static/avatars/mask.png
 !jogarjunto/website/static/avatars/image.png

@@ -1,3 +1,6 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
+
 <nav class="columns is-mobile is-dark navbar is-fixed-top">
     <div class="column is-2-desktop logo">
 
@@ -7,7 +10,7 @@
         {% if user.is_authenticated %}
         <div class="dropdown is-hoverable is-pulled-right is-right">
             <div class="dropdown-trigger">
-            <a class="icon is-large" aria-haspopup="true" aria-controls="dropdown-menu">
+            <a class="icon is-large menu_icon" aria-haspopup="true" aria-controls="dropdown-menu">
                 <i class="fas fa-bars fa-2x has-text-white-bis"></i>
             </a>
             </div>
@@ -21,7 +24,7 @@
             </div>
         </div>
         {% else %}
-        <a href="{% url 'login' %}" class="button is-outlined is-pulled-right is-white">
+        <a href="{% url 'login' %}" class="button is-outlined is-pulled-right is-white login">
             Login</a>         
         {% endif %}
     </div>

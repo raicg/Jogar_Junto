@@ -2,16 +2,57 @@
 
 {% block content %}
 
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+
+
   <div class="container">
 
-    <h2>CADASTRAR</h2>
+    <h2>Cadastrar</h2>
     <hr>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <br>
-      <button type="submit">Cadastrar</button>
-    </form>
-
+    {% if user.is_authenticated %}
+      <p>Você já possui uma conta.</p>
+    {% else %}
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Primeiro Nome</label><br>
+        {{ form.first_name.errors }}
+        {{ form.first_name }}
+        <br>
+        <br>
+        <label>Último Nome</label><br>
+        {{ form.last_name.errors }}
+        {{ form.last_name }}
+        <br>
+        <br>
+        <label>Usuário</label><br>
+        {{ form.username.errors }}
+        {{ form.username }}
+        <br>
+        <br>
+        <label>Senha</label><br>
+        {{ form.password.errors }}
+        {{ form.password }}
+        <br>
+        <br>
+        <label>Email</label><br>
+        {{ form.email.errors }}
+        {{ form.email }}
+        <br>
+        <br>
+        <label>Celular</label> <span class="has-text-weight-light" style="color: gray">(DDD+NUMERO)</span><br>
+        {{ form.phone_number.errors }}
+        {{ form.phone_number }}
+        <br>
+        <br>
+        <label>Foto de perfil</label><br>
+        {{ form.avatar.errors }}
+        <input type="file" name="avatar" id="avatar" class="hidden">
+        <label for="avatar" class="button">Selecionar foto</label>
+        <br>
+        <br>
+        <button type="submit">Cadastrar</button>
+      </form>
+    {% endif %}
   </div>
 {% endblock %}

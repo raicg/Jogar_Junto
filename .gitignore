@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+website/static/avatars/*
+!website/static/avatars/mask.png
+!website/static/avatars/image.png

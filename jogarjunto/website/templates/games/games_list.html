@@ -10,7 +10,7 @@
             <br>
             {% for each_game in games_futebol %}
                 <a href="{% url 'game_details' pk=each_game.pk %}">
-                    <p>{{each_game.when_date}} - {{each_game.when_time}} : {{each_game.address}}</p>
+                    <p>{{ each_game.title }} ({{each_game.when_date}} - {{each_game.when_time}})</p>
                 </a>
             {% endfor %}
             <hr>
@@ -18,7 +18,7 @@
             <br>
             {% for each_game in games_paintball %}
                 <a href="{% url 'game_details' pk=each_game.pk %}">
-                    <p>{{each_game.when_date}} - {{each_game.when_time}} : {{each_game.address}}</p>
+                    <p>{{ each_game.title }} ({{each_game.when_date}} - {{each_game.when_time}})</p>
                 </a>
             {% endfor %}
             <hr>
@@ -26,7 +26,7 @@
             <br>
             {% for each_game in games_lol %}
                 <a href="{% url 'game_details' pk=each_game.pk %}">
-                    <p>{{each_game.when_date}} - {{each_game.when_time}}</p>
+                    <p>{{ each_game.title }} ({{each_game.when_date}} - {{each_game.when_time}})</p>
                 </a>
             {% endfor %}
             <hr>
@@ -34,7 +34,7 @@
             <br>
             {% for each_game in games_dota %}
                 <a href="{% url 'game_details' pk=each_game.pk %}">
-                    <p>{{each_game.when_date}} - {{each_game.when_time}}</p>
+                    <p>{{ each_game.title }} ({{each_game.when_date}} - {{each_game.when_time}})</p>
                 </a>
             {% endfor %}
         {% else %}

@@ -1,10 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
 from django.views import generic
+from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm, CustomPhotoForm
 from .models import MyUser
 from game.models import Game
-from PIL import Image
+from PIL import Image, ImageDraw
+from jogarjunto.settings import BASE_DIR
+from django.core.files import File
+from urllib.request import urlopen
+from io import BytesIO
+from django.contrib.staticfiles.templatetags.staticfiles import static
+import os
 
 class SignUp(generic.CreateView):
     form_class = CustomUserCreationForm
@@ -24,6 +30,7 @@ def new_user(request):
 
 
 def add_photo(request):
+    image_size = (220, 220)
     image_path = request.user.avatar.url.replace('website', '')
     if request.method == 'POST':
         form = CustomPhotoForm(request.POST, request.FILES)
@@ -39,28 +46,50 @@ def add_photo(request):
 
         imagem = Image.open(user_edited.avatar.path)
         if ".jpeg" in user_edited.avatar.path:
-            user_edited.avatar.path.replace('.jpeg', '.png')
-            imagem.save(user_edited.avatar.path, format='PNG')
-            imagem = Image.open(user_edited.avatar.path)
-            imagem = imagem.convert("RGBA")
+            new_avatar_url = user_edited.avatar.url.replace('.jpeg', '.png')
+            imagem.save(new_avatar_url)
+            image_converted = Image.open(new_avatar_url)
+            transparent_mask = Image.new('L', image_size, color=0)
+            draw = ImageDraw.Draw(transparent_mask)
+            not_transparent_area = (45, 45, 177, 177)
+            draw.rectangle(not_transparent_area, fill=255)
+            image_converted = imagem.resize(image_size, Image.ANTIALIAS)
+            image_converted.putalpha(transparent_mask)
+            image_converted.save(new_avatar_url)
+            image_converted = Image.open(new_avatar_url)
+            border = Image.open(BASE_DIR+"/website/static/avatars/image.png").convert("RGBA")
+            mask = Image.open(BASE_DIR+"/website/static/avatars/mask.png").convert("RGBA")
+            Image.alpha_composite(image_converted, border).save(new_avatar_url)
             
-        elif ".jpg" in user_edited.avatar.path:
-            imagem = imagem.convert("RGB")
+        elif ".jpg" in user_edited.avatar.url:
+            new_avatar_url = user_edited.avatar.url.replace('.jpg', '.png')
+            imagem.save(new_avatar_url)
+            image_converted = Image.open(new_avatar_url)
+            transparent_mask = Image.new('L', image_size, color=0)
+            draw = ImageDraw.Draw(transparent_mask)
+            not_transparent_area = (45, 45, 177, 177)
+            draw.rectangle(not_transparent_area, fill=255)
+            image_converted = imagem.resize(image_size, Image.ANTIALIAS)
+            image_converted.putalpha(transparent_mask)
+            image_converted.save(new_avatar_url)
+            image_converted = Image.open(new_avatar_url)
+            border = Image.open(BASE_DIR+"/website/static/avatars/image.png").convert("RGBA")
+            mask = Image.open(BASE_DIR+"/website/static/avatars/mask.png").convert("RGBA")
+            Image.alpha_composite(image_converted, border).save(new_avatar_url)
         else:
             imagem = imagem.convert("RGBA")
         
-        imagem = imagem.resize((220, 220), Image.ANTIALIAS)
-        imagem2 = Image.open('/home/raicg/Documents/jogarjunto/jogarjunto/website/static/avatars/image.png').convert("RGBA")
-        mask = Image.open('/home/raicg/Documents/jogarjunto/jogarjunto/website/static/avatars/mask.png').convert("RGBA")
-        Image.composite(imagem2, imagem, mask).save(user_edited.avatar.path)
+            image_converted = imagem.resize(image_size, Image.ANTIALIAS)
+            imagem2 = Image.open(BASE_DIR+"/website/static/avatars/image.png").convert("RGBA")
+            mask = Image.open(BASE_DIR+"/website/static/avatars/mask.png").convert("RGBA")
+            Image.composite(imagem2, image_converted, mask).save(new_avatar_url)
 
-        #imagem = Image.open(user_edited.avatar.path).convert("RGBA")
-        #imagem = imagem.resize((220, 220), Image.ANTIALIAS)
-        #imagem.save(user_edited.avatar.path)
-        #imagem = Image.open(user_edited.avatar.path).convert("RGBA")
-        #imagem2 = Image.open('/home/raicg/Documents/jogarjunto/jogarjunto/website/static/avatars/image.png').convert("RGBA")
-        #Image.alpha_composite(imagem, imagem2).save(user_edited.avatar.path)
-        #imagem.save(user_edited.avatar.path)
+        filename = new_avatar_url.replace("website/static/avatars/", "")
+        content = open(BASE_DIR+"/website/static/avatars/"+filename, 'rb')
+        avatar_file = File(content)
+        request.user.avatar.save(filename, avatar_file, save=True)
+        os.remove(user_edited.avatar.url)
+        os.remove(new_avatar_url)
 
         return redirect('photo_success')
     else:
@@ -80,4 +109,5 @@ def user_detail(request, pk):
     user_detail = get_object_or_404(MyUser, pk=pk)
     user_games = Game.objects.filter(players_team1 = user_detail)
     user_games2 = Game.objects.filter(players_team2 = user_detail)
-    return render(request, 'user/details.html', {'user_detail': user_detail, 'user_games': user_games, 'user_games2': user_games2})
+    avatar_static_path =  user_detail.avatar.url.replace("website/static/", "")
+    return render(request, 'user/details.html', {'user_detail': user_detail, 'user_games': user_games, 'user_games2': user_games2, 'avatar_static_path': avatar_static_path, })

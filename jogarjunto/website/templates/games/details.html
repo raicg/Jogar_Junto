@@ -139,13 +139,13 @@
                 {% endif %}
 
             {% endif %}
-
-
+            {% if entered == 1 %}
             <br><br><br>
             {% url 'game_chat' as game_chat_url %}
             {% include 'games/chat.html' with game_chat=game_chat %}
             <hr>
-            {% include 'games/send_message_chat.html' %}
+                {% include 'games/send_message_chat.html' %}
+            {% endif %}
 
         {% else %}
             <p>You are not logged in</p>

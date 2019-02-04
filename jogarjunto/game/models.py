@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Game(models.Model):
+    title = models.CharField(max_length = 80)
     players_team1 = models.ManyToManyField("accounts.MyUser", related_name='players_team1')
     players_team2 = models.ManyToManyField("accounts.MyUser", related_name='players_team2', blank = True)
     online = models.BooleanField()

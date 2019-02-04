@@ -10,6 +10,10 @@
             <form method="POST" class="AddGameForm">
                 {% csrf_token %}
                 <div class="fieldWrapper">
+                <label>Título ?</label><br><br>
+                {{ form.title }}
+                {{ form.title.errors }}
+                <hr>
                 <label>Jogo online ?</label><br><br>
                 <div class="columns is-multiline is-mobile is-desktop">
                     <div class="column is-half-mobile is-half-desktop is-half-tablet">

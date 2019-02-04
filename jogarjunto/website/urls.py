@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.games_list, name='game_list'),
     path('add-game/', views.add_game, name='add_game'),
     path('details/<int:pk>/', views.game_detail, name='game_details'),
+    path('details/<int:pk>/games/chat/', views.game_chat, name='game_chat'),
 ]

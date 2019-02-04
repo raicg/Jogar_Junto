@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from game.models import Game
+from game.models import Game, Message_Chat
 from accounts.models import MyUser
 from django.contrib.auth import authenticate, login, logout
 from .forms import AddGameForm
@@ -30,4 +30,10 @@ def game_detail(request, pk):
     players_team2 = game_detail.players_team2.all()
     size_team1 = len(players_team1)
     size_team2 = len(players_team2)
-    return render(request, 'games/details.html', {'game_detail': game_detail, 'players_team1': players_team1, 'players_team2': players_team2, 'size_team1' : size_team1, 'size_team2' : size_team2, })
+    game_chat = Message_Chat.objects.filter(game_id = pk).order_by('-created_at')
+    return render(request, 'games/details.html', {'game_detail': game_detail, 'players_team1': players_team1, 'players_team2': players_team2, 'size_team1' : size_team1, 'size_team2' : size_team2, 'game_chat' : game_chat, })
+
+def game_chat(request, pk):
+    game_chat = Message_Chat.objects.filter(game_id = pk).order_by('-created_at')
+    return render(request, 'games/chat.html', {'game_chat': game_chat, })
+

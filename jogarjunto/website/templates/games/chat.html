@@ -1,0 +1,15 @@
+
+<div class="container" id="test">
+    {% if user.is_authenticated %}
+
+        <h1><center>CHAT</center></h1>
+
+        {% for each_message in game_chat %}
+            <p><b>{{ each_message.author }}</b>: {{ each_message.text }}</p>
+            <span>{{ each_message.created_at }}</span>
+            <br>
+        {% endfor %}
+    {% else %}
+
+    {% endif %}
+</div>

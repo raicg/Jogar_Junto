@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% load staticfiles %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="{% static "js/refresh_chat.js" %}"></script>
     <script type="text/javascript">
         function showUserDetails(url) {
         newwindow=window.open(url,'name','height=600,width=520,top=200,left=700,resizable');
@@ -93,6 +95,9 @@
             {% endif %}
 
 
+            <br><br><br>
+            {% url 'game_chat' as game_chat_url %}
+            {% include 'games/chat.html' with game_chat=game_chat %}
 
         {% else %}
             <p>You are not logged in</p>

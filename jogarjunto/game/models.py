@@ -18,3 +18,9 @@ class Game(models.Model):
     when_time = models.TimeField()
     game_type = models.IntegerField()
 
+class Message_Chat(models.Model):
+    author = models.ForeignKey("accounts.MyUser", on_delete=models.CASCADE)
+    text = models.CharField(max_length = 400)
+    created_at = models.DateTimeField(default = timezone.now)
+    game_id = models.ForeignKey("game.Game", on_delete=models.CASCADE)
+

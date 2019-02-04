@@ -1,0 +1,6 @@
+<form method="POST" class="SendMessageChatForm">
+    {% csrf_token %}
+    {{form.text}}
+    <br><br>
+    <button type="submit" class="button is-white">Enviar</button>
+</form>

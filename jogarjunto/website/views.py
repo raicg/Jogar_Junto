@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from game.models import Game, Message_Chat
 from accounts.models import MyUser
 from django.contrib.auth import authenticate, login, logout
-from .forms import AddGameForm
+from .forms import AddGameForm, SendMessageChatForm
+from django.utils import timezone
 
 def games_list(request):
     lista_de_games_futebol =  Game.objects.filter(game_type=1)
@@ -26,12 +27,21 @@ def add_game(request):
 
 def game_detail(request, pk):
     game_detail = get_object_or_404(Game, pk=pk)
+    if request.method == "POST":
+        form = SendMessageChatForm(request.POST)
+        if form.is_valid():
+            chat = form.save(commit=False)
+            chat.author = request.user
+            chat.game_id = game_detail
+            chat.save()
+    else:
+        form = SendMessageChatForm()
     players_team1 = game_detail.players_team1.all()
     players_team2 = game_detail.players_team2.all()
     size_team1 = len(players_team1)
     size_team2 = len(players_team2)
     game_chat = Message_Chat.objects.filter(game_id = pk).order_by('-created_at')
-    return render(request, 'games/details.html', {'game_detail': game_detail, 'players_team1': players_team1, 'players_team2': players_team2, 'size_team1' : size_team1, 'size_team2' : size_team2, 'game_chat' : game_chat, })
+    return render(request, 'games/details.html', {'game_detail': game_detail, 'players_team1': players_team1, 'players_team2': players_team2, 'size_team1' : size_team1, 'size_team2' : size_team2, 'game_chat' : game_chat, 'form' : form })
 
 def game_chat(request, pk):
     game_chat = Message_Chat.objects.filter(game_id = pk).order_by('-created_at')

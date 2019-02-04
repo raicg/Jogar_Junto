@@ -20,7 +20,7 @@ class Game(models.Model):
 
 class Message_Chat(models.Model):
     author = models.ForeignKey("accounts.MyUser", on_delete=models.CASCADE)
-    text = models.CharField(max_length = 400)
+    text = models.TextField(max_length = 400)
     created_at = models.DateTimeField(default = timezone.now)
     game_id = models.ForeignKey("game.Game", on_delete=models.CASCADE)
 

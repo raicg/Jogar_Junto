@@ -2,12 +2,10 @@
 <div class="container" id="test">
     {% if user.is_authenticated %}
 
-        <h1><center>CHAT</center></h1>
-
         {% for each_message in game_chat %}
-            <p><b>{{ each_message.author }}</b>: {{ each_message.text }}</p>
-            <span>{{ each_message.created_at }}</span>
-            <br>
+            <p style="font-size: 130%"><b>{{ each_message.author.first_name }} {{ each_message.author.last_name }}</b>: {{ each_message.text | linebreaks }}</p>
+            <span style="font-size: 80%">{{ each_message.created_at }}</span>
+            <br><br>
         {% endfor %}
     {% else %}
 

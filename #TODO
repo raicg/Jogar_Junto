@@ -1,0 +1,21 @@
+Include better model field, like address field
+
+Design
+
+Logo
+
+May change method of refresh page chat to create a channel, using Django Channels
+
+FIX: convert JPEG to PNG (RGB to RGBA) to fix image after treatment to receive border
+
+ADD Field Game Title and use it on game_list page
+
+ADD Game Title to profile user page too and avatar
+
+Change input on add_game page dynamically, like when select game online, only appear URL, not address
+
+add the same treatment on photo_page on signup_page
+
+modify photo_page to be the profile_edit_page of an user
+
+...

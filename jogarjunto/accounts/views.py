@@ -7,9 +7,6 @@ from game.models import Game
 from PIL import Image, ImageDraw
 from jogarjunto.settings import BASE_DIR
 from django.core.files import File
-from urllib.request import urlopen
-from io import BytesIO
-from django.contrib.staticfiles.templatetags.staticfiles import static
 import os
 
 class SignUp(generic.CreateView):

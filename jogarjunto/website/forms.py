@@ -13,3 +13,4 @@ class SendMessageChatForm(forms.ModelForm):
     class Meta:
         model = Message_Chat
         fields = ('text', )
+

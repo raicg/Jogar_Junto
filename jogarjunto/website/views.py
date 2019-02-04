@@ -36,14 +36,38 @@ def game_detail(request, pk):
             chat.save()
     else:
         form = SendMessageChatForm()
+
     players_team1 = game_detail.players_team1.all()
     players_team2 = game_detail.players_team2.all()
+    if request.user in players_team1 or request.user in players_team2:
+        entered = 1
+    else:
+        entered = 0
     size_team1 = len(players_team1)
     size_team2 = len(players_team2)
     game_chat = Message_Chat.objects.filter(game_id = pk).order_by('-created_at')
-    return render(request, 'games/details.html', {'game_detail': game_detail, 'players_team1': players_team1, 'players_team2': players_team2, 'size_team1' : size_team1, 'size_team2' : size_team2, 'game_chat' : game_chat, 'form' : form })
+    return render(request, 'games/details.html', {'game_detail': game_detail, 'players_team1': players_team1, 'players_team2': players_team2, 'size_team1' : size_team1, 'size_team2' : size_team2, 'game_chat' : game_chat, 'form' : form, 'entered' : entered, })
 
 def game_chat(request, pk):
     game_chat = Message_Chat.objects.filter(game_id = pk).order_by('-created_at')
     return render(request, 'games/chat.html', {'game_chat': game_chat, })
 
+def enter_game_team1(request, pk):
+    game = get_object_or_404(Game, pk=pk)
+    game.players_team1.add(request.user)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def enter_game_team2(request, pk):
+    game = get_object_or_404(Game, pk=pk)
+    game.players_team2.add(request.user)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def leave_game_team1(request, pk):
+    game = get_object_or_404(Game, pk=pk)
+    game.players_team1.remove(request.user)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def leave_game_team2(request, pk):
+    game = get_object_or_404(Game, pk=pk)
+    game.players_team2.remove(request.user)
+    return redirect(request.META.get('HTTP_REFERER'))

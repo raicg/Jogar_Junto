@@ -6,8 +6,6 @@ Logo
 
 May change method of refresh page chat to create a channel, using Django Channels
 
-Change input on add_game page dynamically, like when select game online, only appear URL, not address
-
 modify photo_page to be the profile_edit_page of an user
 
 API to send all games registered.

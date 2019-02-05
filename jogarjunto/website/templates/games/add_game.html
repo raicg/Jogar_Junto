@@ -3,24 +3,27 @@
 {% block content %}
 
     {% include "navbar.html" %}
-
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add_game.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{% static "js/display_form_add_game.js" %}"></script>
     <div class="container">
         {% if user.is_authenticated %}
 
             <form method="POST" class="AddGameForm">
                 {% csrf_token %}
                 <div class="fieldWrapper">
-                <label>Título ?</label><br><br>
+                <label for="title">Título ?</label><br><br>
                 {{ form.title }}
                 {{ form.title.errors }}
                 <hr>
                 <label>Jogo online ?</label><br><br>
                 <div class="columns is-multiline is-mobile is-desktop">
                     <div class="column is-half-mobile is-half-desktop is-half-tablet">
-                        <input type="radio" name="online" value="True"><br>Sim
+                        <input type="radio" name="online" value="True" class="online_true" id="online_true"><br><label for="online_true">Sim</label>
                     </div>
                     <div class="column is-half-mobile is-half-desktop is-half-tablet">
-                        <input type="radio" name="online" value="False"><br>Não
+                        <input type="radio" name="online" value="False" class="online_false" id="online_false"><br><label for="online_false">Não</label>
                     </div>
                     {{ form.online.errors }}
                 </div>
@@ -39,14 +42,19 @@
                 <label>Quantos jogadores por time ?</label><br><br>
                 <input type="number" name="team_players" min="1" max="12" step="1">
                 {{ form.team_players.errors }}
-                <hr>
-                <label>Qual o endereço ?</label><br><br>
-                <input type="text" name="address">
-                {{ form.address.errors }}
-                <hr>
-                <label>Qual o link(url) ?</label><br><br>
-                <input type="url" name="url">
-                {{ form.url.errors }}
+                <div class="address_game">
+                    <hr>
+                    <label>Qual o endereço ?</label><br><br>
+                    <input type="text" name="address">
+                    {{ form.address.errors }}    
+                </div>
+
+                <div class="url_game">
+                    <hr>
+                    <label>Qual o link(url) ?</label><br><br>
+                    <input type="url" name="url">
+                    {{ form.url.errors }}
+                </div>
                 <hr>
                 <label>Qual dia ?</label><br><br>
                 <input type="date" name="when_date">
@@ -55,22 +63,24 @@
                 <label>Qual hora ?</label><br><br>
                 <input type="time" name="when_time">
                 {{ form.when_time.errors }}
+                <div class="what_game" id="what_game">
                 <hr>
-                <label>Qual o jogo ?</label><br><br>
-                <div class="columns is-multiline is-mobile is-desktop">
-                    <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
-                        <input type="radio" name="game_type" value="1"><br>Futebol
+                    <label>Qual o jogo ?</label><br><br>
+                    <div class="columns is-multiline is-mobile is-desktop">
+                        <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
+                            <input type="radio" name="game_type" value="1" class="game_offline" id="game_offline1"><br><label for="game_offline1" class="game_offline">Futebol</label>
+                        </div>
+                        <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
+                            <input type="radio" name="game_type" value="2" class="game_offline" id="game_offline2"><br><label for="game_offline2" class="game_offline">Paintball</label>
+                        </div>
+                        <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
+                            <input type="radio" name="game_type" value="3" class="game_online" id="game_online1"><br><label for="game_online1" class="game_online">LOL</label>
+                        </div>
+                        <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
+                            <input type="radio" name="game_type" value="4" class="game_online" id="game_online2"><br><label for="game_online2" class="game_online">DOTA2</label>
+                        </div>
+                        {{ form.game_type.errors }}
                     </div>
-                    <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
-                        <input type="radio" name="game_type" value="2"><br>Paintball
-                    </div>
-                    <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
-                        <input type="radio" name="game_type" value="3"><br>LOL
-                    </div>
-                    <div class="column is-quarter-mobile is-quarter-desktop is-quarter-tablet">
-                        <input type="radio" name="game_type" value="4"><br>DOTA2
-                    </div>
-                    {{ form.game_type.errors }}
                 </div>
                 <hr>
                 <button type="submit">Save</button>

@@ -7,7 +7,7 @@ class CustomUserCreationForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('username', 'email', 'phone_number', 'first_name', 'last_name', 'password', 'avatar', )
+        fields = ('username', 'email', 'phone_number', 'first_name', 'last_name', 'password', )
         widgets = {
             'password': PasswordInput(),
         }
@@ -20,13 +20,30 @@ class CustomUserCreationForm(forms.ModelForm):
             user.save()
         return user
 
-
-
-
-
 class CustomPhotoForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
         fields = ('avatar', )
+
+
+class ChangeNameForm(forms.ModelForm):
+
+    class Meta:
+        model = MyUser
+        fields = ('first_name', 'last_name', )
+
+
+class ChangeEmailForm(forms.ModelForm):
+
+    class Meta:
+        model = MyUser
+        fields = ( 'email', )
+
+
+class ChangePhoneNumberForm(forms.ModelForm):
+
+    class Meta:
+        model = MyUser
+        fields = ( 'phone_number', )
 

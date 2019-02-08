@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/edit_name.css' %}">
+
+
+  <div class="container">
+
+    <h2>Alterar Nome</h2>
+    <hr>
+    {% if user.is_authenticated %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>Primeiro Nome</label><br>
+            {{ form.first_name.errors }}
+            {{ form.first_name }}
+            <br>
+            <br>
+            <label>Último Nome</label><br>
+            {{ form.last_name.errors }}
+            {{ form.last_name }}
+            <br>
+            <br>
+            <button type="submit">Alterar</button>
+        </form>
+    {% else %}
+      <p>Primeiro faça login.</p>
+    {% endif %}
+  </div>
+{% endblock %}

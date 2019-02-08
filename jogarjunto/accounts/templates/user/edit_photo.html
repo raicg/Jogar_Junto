@@ -5,14 +5,16 @@
 {% load staticfiles %}
 
   <div class="container">
+        <h2>Alterar Foto de Perfil</h2>
+        <hr>
         {% if user.is_authenticated %}
-        <img src="{{ image_path }}">
+        <img src="{% static user.avatar_static_path %}">
         <form method="POST" class="CustomUserCreationForm" action="" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.avatar.errors }}
             {{ form.avatar }}
             <br>
-            <button type="submit">Upload</button>
+            <button type="submit">Enviar</button>
         </form>
         {% else %}
             <p>You are not logged in</p>

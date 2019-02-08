@@ -36,9 +36,10 @@ def game_detail(request, pk):
             chat.save()
     else:
         form = SendMessageChatForm()
-
+    
     players_team1 = game_detail.players_team1.all()
     players_team2 = game_detail.players_team2.all()
+
     if request.user in players_team1 or request.user in players_team2:
         entered = 1
     else:

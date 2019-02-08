@@ -47,22 +47,28 @@
             {% if game_detail.teamxteam == 1 %}
             <div class="columns is-multiline is-mobile is-desktop">
                 <div class="column is-half-mobile is-half-desktop is-half-tablet">
-                    {% for each_player in players_team1 %}
-                        <a href="{% url 'user_details' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
-                            <p class="each_player_team1">{{ each_player.first_name }} {{ each_player.last_name }}
-                        </a>
-                            {% if user == each_player %}
-                                <a class="icon plus" href="{% url 'leave_game_team1' pk=game_detail.pk %}">
-                                    <span class="icon is-small is-size-6">
-                                        <i class="fas fa-minus-circle"></i>
-                                    </span>
+                    <div class="columns is-multiline is-mobile is-desktop">
+                        {% for each_player in players_team1 %}
+                            <div class="column is-half-mobile is-one-quarter-desktop is-one-third-tablet">
+                                
+                                <a href="{% url 'user_details' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
+                                    <p class="each_avatar_player_team1"><img src="{% static each_player.avatar_static_path %}"></p>
+                                    <p class="each_player_team1">{{ each_player.first_name }} {{ each_player.last_name }}
                                 </a>
-                            </p>
-                            {% else %}
-                                </p>
-                            {% endif %}
-                        <br>
-                    {% endfor %}
+                                    {% if user == each_player %}
+                                        <a class="icon plus" href="{% url 'leave_game_team1' pk=game_detail.pk %}">
+                                            <span class="icon is-small is-size-6">
+                                                <i class="fas fa-minus-circle"></i>
+                                            </span>
+                                        </a>
+                                    </p>
+                                    {% else %}
+                                        </p>
+                                    {% endif %}
+                                <br>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
 
                 <div class="column is-half-mobile is-half-desktop is-half-tablet">

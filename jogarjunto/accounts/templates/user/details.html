@@ -3,11 +3,11 @@
 {% block content %}
 {% load staticfiles %}
   <div class="container">
-    <div class="tile notification is-dark box is-size-6">
+    <div class="notification box is-size-6">
         {% if permission == 1 %}
 
-          <img src={% static user_detail.avatar_static_path %}/><br><a href="{% url 'user_edit_photo' %}" class="button">Alterar</a><br><br>
-          <h1 class="title">{{ user_detail.first_name }} {{ user_detail.last_name }}</h1><a href="{% url 'user_edit_name' %}" class="button">Alterar</a><br>
+          <img src={% static user_detail.avatar_static_path %}/><br><a href="{% url 'userEditPhoto' %}" class="button">Alterar</a><br><br>
+          <h1 class="title">{{ user_detail.first_name }} {{ user_detail.last_name }}</h1><a href="{% url 'userEditName' %}" class="button">Alterar</a><br>
           <br>
           <div class="columns is-multilane is-mobile is-desktop is-tablet">
             <div class="column is-half-mobile is-half-desktop is-half-tablet">
@@ -16,7 +16,7 @@
             </div>
     
             <div class="column is-half-mobile is-half-desktop is-half-tablet">
-            <a href="{% url 'user_edit_email' %}" class="button">Alterar</a>
+            <a href="{% url 'userEditEmail' %}" class="button">Alterar</a>
             </div>
           </div>
           <div class="columns is-multilane is-mobile is-desktop is-tablet">
@@ -27,7 +27,7 @@
     
     
             <div class="column is-half-mobile is-half-desktop is-half-tablet">
-            <a href="{% url 'user_edit_phone_number' %}" class="button">Alterar</a>
+            <a href="{% url 'userEditPhoneNumber' %}" class="button">Alterar</a>
             </div>
           </div>
   
@@ -52,23 +52,26 @@
       <br>
       <p>Jogos:</p>
       {% for each_game in user_games %}
-        <p><b>
-          {% if each_game.game_type == 1 %}
-            Futebol:  
-          {% elif each_game.game_type == 2 %}
-            Paintball: 
-          {% elif each_game.game_type == 3 %}
-            LOL: 
-          {% elif each_game.game_type == 4 %}
-            Dota 2:
-          {% else %}
-            Jogo não cadastrado na page details_user: 
-          {% endif %}
-        </b>
-        {{ each_game.title}}</p><span style="font-size: 80%;"> ({{ each_game.when_date }}-{{ each_game.when_time }})</span><br> 
+        <a href="{% url 'gameDetails' pk=each_game.pk %}">
+          <p><b>
+            {% if each_game.game_type == 1 %}
+              Futebol:  
+            {% elif each_game.game_type == 2 %}
+              Paintball: 
+            {% elif each_game.game_type == 3 %}
+              LOL: 
+            {% elif each_game.game_type == 4 %}
+              Dota 2:
+            {% else %}
+              Jogo não cadastrado na page details_user: 
+            {% endif %}
+          </b>
+          {{ each_game.title}}</p><span style="font-size: 80%;"> ({{ each_game.when_date }}-{{ each_game.when_time }})</span><br> 
+        </a>
       {% endfor %}  
       {% for each_game in user_games2 %}
-        <p><b>
+        <a href="{% url 'gameDetails' pk=each_game.pk %}">
+          <p><b>
           {% if each_game.game_type == 1 %}
             Futebol:  
           {% elif each_game.game_type == 2 %}
@@ -82,6 +85,7 @@
           {% endif %}
           </b>
           {{ each_game.title}}</p><span style="font-size: 80%;"> ({{ each_game.when_date }}-{{ each_game.when_time }})</span><br> 
+        </a>
       {% endfor %}  
     
 

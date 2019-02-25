@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container edit">
+
+    <p>Foto alterada com sucesso.</p>
+    <br><br>
+    <a href="{% url 'gameList' %}" class="button is-white is-outlined">Home</a><br><br>
+    <a href="{% url 'userDetails' pk=request.user.pk %}" class="button is-white is-outlined">Perfil</a>
+
+  </div>
+{% endblock %}

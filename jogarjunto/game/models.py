@@ -5,6 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Game(models.Model):
     title = models.CharField(max_length = 80)
+    author = models.ForeignKey("accounts.MyUser", on_delete=models.CASCADE)
     players_team1 = models.ManyToManyField("accounts.MyUser", related_name='players_team1')
     players_team2 = models.ManyToManyField("accounts.MyUser", related_name='players_team2', blank = True)
     online = models.BooleanField()

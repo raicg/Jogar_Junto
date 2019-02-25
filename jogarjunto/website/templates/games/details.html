@@ -6,7 +6,7 @@
 <script src="{% static "js/refresh_chat.js" %}"></script>
     <script type="text/javascript">
         function showUserDetails(url) {
-        newwindow=window.open(url,'name','height=600,width=520,top=200,left=700,resizable');
+        newwindow=window.open(url,'name','height=700,width=520,top=200,left=700,resizable');
         if (window.focus) {newwindow.focus()}
         }
     </script>
@@ -14,149 +14,185 @@
     {% include "navbar.html" %}
 
     <div class="container">
-        {% if user.is_authenticated %}
-            <div class="content is-large">
-                <h1 class="title">Detalhes do jogo:</h1>    
+            <div id="flow">
+                <span class="flow-1"></span>
+                <span class="flow-2"></span>
+                <span class="flow-3"></span>
             </div>
-            <br>
-            {% if game_detail.game_type == 1 %}
-                <p>Tipo de jogo:</p>
-                <p>Futebol</p>
-            {% elif game_detail.game_type == 2 %}
-                <p>Tipo de jogo:</p>
-                <p>Paintball</p>
-            {% elif game_detail.game_type == 3 %}
-                <p>Tipo de jogo:</p>
-                <p>LOL</p>
-            {% elif game_detail.game_type == 4 %}
-                <p>Tipo de jogo:</p>
-                <p>DOTA 2</p>
-            {% else %}
-                <p>Tipo de jogo: INVALIDO</p>
-            {% endif %}
-            <br>
-            <p>Endereço:</p>
-            {% if game_detail.online == 0 %}
-                <p>{{ game_detail.address }}</p>
-            {% else %}
-                <p><a href="{{ game_detail.url }}" target="_blank">{{ game_detail.url }}</a></p>
-            {% endif %}
-            <br>
-            <p>{{ game_detail.when_date }} - {{ game_detail.when_time }}</p>
-            <hr>
-            {% if game_detail.teamxteam == 1 %}
-            <div class="columns is-multiline is-mobile is-desktop">
-                <div class="column is-half-mobile is-half-desktop is-half-tablet">
-                    <div class="columns is-multiline is-mobile is-desktop">
-                        {% for each_player in players_team1 %}
-                            <div class="column is-half-mobile is-one-quarter-desktop is-one-third-tablet">
-                                
-                                <a href="{% url 'user_details' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
-                                    <p class="each_avatar_player_team1"><img src="{% static each_player.avatar_static_path %}"></p>
-                                    <p class="each_player_team1">{{ each_player.first_name }} {{ each_player.last_name }}
-                                </a>
-                                    {% if user == each_player %}
-                                        <a class="icon plus" href="{% url 'leave_game_team1' pk=game_detail.pk %}">
-                                            <span class="icon is-small is-size-6">
-                                                <i class="fas fa-minus-circle"></i>
-                                            </span>
-                                        </a>
-                                    </p>
+            <div class="section">
+                
+                <!-- Developers -->
+                <div class="row columns">
+                    <div class="column is-12">
+                        <div class="card large">
+                            <div class="card-content">
+                                <div class="content">
+                                   
+                                        {% if user.is_authenticated %}
+                                        <div class="content is-large">
+                                            <h1 class="title">Detalhes do jogo:</h1>    
+                                        </div>
+                                        <br>
+                                        {% if game_detail.game_type == 1 %}
+                                            <p>Tipo de jogo:</p>
+                                            <p>Futebol</p>
+                                        {% elif game_detail.game_type == 2 %}
+                                            <p>Tipo de jogo:</p>
+                                            <p>Paintball</p>
+                                        {% elif game_detail.game_type == 3 %}
+                                            <p>Tipo de jogo:</p>
+                                            <p>LOL</p>
+                                        {% elif game_detail.game_type == 4 %}
+                                            <p>Tipo de jogo:</p>
+                                            <p>DOTA 2</p>
+                                        {% else %}
+                                            <p>Tipo de jogo: INVALIDO</p>
+                                        {% endif %}
+                                        <br>
+                                        <p>Endereço:</p>
+                                        {% if game_detail.online == 0 %}
+                                            <p>{{ game_detail.address }}</p>
+                                        {% else %}
+                                            <p><a href="{{ gameDetail.url }}" target="_blank">{{ game_detail.url }}</a></p>
+                                        {% endif %}
+                                        <br>
+                                        <p>{{ game_detail.when_date }} - {{ game_detail.when_time }}</p>
+                                        <br>
+                                        <a href="{% url 'gameDelete' pk=game_detail.pk %}" class="button">Deletar Jogo</a>
+                                        
+                            
+                                        <hr>
+                                        {% if game_detail.teamxteam == 1 %}
+                                        <div class="columns is-multiline is-mobile is-desktop">
+                                            <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                                                <div class="columns is-multiline is-mobile is-desktop">
+                                                    {% for each_player in players_team1 %}
+                                                        <div class="column is-half-mobile is-one-quarter-desktop is-one-third-tablet">
+                                                            
+                                                            <a href="{% url 'userDetails' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
+                                                                <p class="each_avatar_player_team1"><img src="{% static each_player.avatar_static_path %}"></p>
+                                                                <p class="each_player_team1">{{ each_player.first_name }} {{ each_player.last_name }}
+                                                            </a>
+                                                                {% if user == each_player %}
+                                                                    <a class="icon plus" href="{% url 'leave_game_team1' pk=game_detail.pk %}">
+                                                                        <span class="icon is-small is-size-6">
+                                                                            <i class="fas fa-minus-circle"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </p>
+                                                                {% else %}
+                                                                    </p>
+                                                                {% endif %}
+                                                            <br>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                            
+                                            <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                                                    <div class="columns is-multiline is-mobile is-desktop">
+                                                        {% for each_player in players_team2 %}
+                                                            <div class="column is-half-mobile is-one-quarter-desktop is-one-third-tablet">
+                                                                <a href="{% url 'userDetails' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
+                                                                    <p class="each_avatar_player_team2"><img src="{% static each_player.avatar_static_path %}"></p>
+                                                                    <p class="each_player_team2">{{ each_player.first_name }} {{ each_player.last_name }}
+                                                                </a>
+                                                                {% if user == each_player %}
+                                                                    <a class="icon plus" href="{% url 'leaveGameTeam2' pk=game_detail.pk %}">
+                                                                        <span class="icon is-small is-size-6">
+                                                                            <i class="fas fa-minus-circle"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                    </p>
+                                                                {% else %}
+                                                                    </p>
+                                                                {% endif %}
+                                                                <br>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="columns is-multiline is-mobile is-desktop">
+                                            <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                                                <hr>
+                                                {% if size_team1 < game_detail.team_players and entered == 0 %}
+                                                    <a class="icon plus" href="{% url 'enterGameTeam1' pk=game_detail.pk %}">
+                                                        <span class="icon is-large is-fixed-bottom is-size-1">
+                                                            <i class="fas fa-plus-circle"></i>
+                                                        </span>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                            <div class="column is-half-mobile is-half-desktop is-half-tablet">
+                                                <hr>
+                                                {% if size_team2 < game_detail.team_players and entered == 0 %}
+                                                    <a class="icon plus" href="{% url 'enterGameTeam2' pk=game_detail.pk %}">
+                                                        <span class="icon is-large is-fixed-bottom is-size-1">
+                                                            <i class="fas fa-plus-circle"></i>
+                                                        </span>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        {% else %}
+                                        <div class="columns is-multiline is-mobile is-desktop">
+                                            <div class="column is-full-mobile is-full-desktop is-full-tablet">
+                                                <div class="columns is-multiline is-mobile is-desktop">
+                                                    {% for each_player in players_team1 %}
+                                                        <div class="column is-one-third-mobile is-one-quarter-desktop is-one-quarter-tablet">
+                                                            <a href="{% url 'userDetails' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
+                                                                <p class="each_avatar_player_team1"><img src="{% static each_player.avatar_static_path %}"></p>
+                                                                <p class="each_player_teamonly">{{ each_player.first_name }} {{ each_player.last_name }}
+                                                            </a>
+                                                            {% if user == each_player %}
+                                                                <a class="icon plus" href="{% url 'leaveGameTeam1' pk=game_detail.pk %}">
+                                                                    <span class="icon is-small is-size-6">
+                                                                        <i class="fas fa-minus-circle"></i>
+                                                                    </span>
+                                                                </a>
+                                                                </p>
+                                                            {% else %}
+                                                                </p>
+                                                            {% endif %}
+                                                            <br>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                            
+                                            <hr>
+                                            {% if size_team1 < game_detail.team_players and entered == 0 %}
+                                                
+                                                <a class="icon plus" href="{% url 'enterGameTeam1' pk=game_detail.pk %}">
+                                                    <span class="icon is-large is-fixed-bottom is-size-1">
+                                                        <i class="fas fa-plus-circle"></i>
+                                                    </span>
+                                                </a>
+                                            {% endif %}
+                            
+                                        {% endif %}
+                                        {% if entered == 1 %}
+                                        <br>
+                                        {% url 'game_chat' as game_chat_url %}
+                                        {% include 'games/chat.html' with game_chat=game_chat %}
+                                        <hr>
+                                            {% include 'games/sendMessageChat.html' %}
+                                        {% endif %}
+                            
                                     {% else %}
-                                        </p>
+                                        <p>You are not logged in</p>
                                     {% endif %}
-                                <br>
+
+                                </div>
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
                 </div>
-
-                <div class="column is-half-mobile is-half-desktop is-half-tablet">
-                    {% for each_player in players_team2 %}
-                        <a href="{% url 'user_details' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
-                            <p class="each_player_team2">{{ each_player.first_name }} {{ each_player.last_name }}
-                        </a>
-                        {% if user == each_player %}
-                            <a class="icon plus" href="{% url 'leave_game_team2' pk=game_detail.pk %}">
-                                <span class="icon is-small is-size-6">
-                                    <i class="fas fa-minus-circle"></i>
-                                </span>
-                            </a>
-                            </p>
-                        {% else %}
-                            </p>
-                        {% endif %}
-                        <br>
-                    {% endfor %}
-                </div>
+    
             </div>
-            <div class="columns is-multiline is-mobile is-desktop">
-                <div class="column is-half-mobile is-half-desktop is-half-tablet">
-                    <hr>
-                    {% if size_team1 < game_detail.team_players and entered == 0 %}
-                        <a class="icon plus" href="{% url 'enter_game_team1' pk=game_detail.pk %}">
-                            <span class="icon is-large is-fixed-bottom is-size-1">
-                                <i class="fas fa-plus-circle"></i>
-                            </span>
-                        </a>
-                    {% endif %}
-                </div>
-                <div class="column is-half-mobile is-half-desktop is-half-tablet">
-                    <hr>
-                    {% if size_team2 < game_detail.team_players and entered == 0 %}
-                        <a class="icon plus" href="{% url 'enter_game_team2' pk=game_detail.pk %}">
-                            <span class="icon is-large is-fixed-bottom is-size-1">
-                                <i class="fas fa-plus-circle"></i>
-                            </span>
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
-            {% else %}
-            <div class="columns is-multiline is-mobile is-desktop">
-                <div class="column is-full-mobile is-full-desktop is-full-tablet">
-                    {% for each_player in players_team1 %}
-                        <a href="{% url 'user_details' pk=each_player.pk %}" target="_blank" onClick="showUserDetails(this.href);return(false);">
-                            <p class="each_player_teamonly">{{ each_player.first_name }} {{ each_player.last_name }}
-                        </a>
-                        {% if user == each_player %}
-                            <a class="icon plus" href="{% url 'leave_game_team1' pk=game_detail.pk %}">
-                                <span class="icon is-small is-size-6">
-                                    <i class="fas fa-minus-circle"></i>
-                                </span>
-                            </a>
-                            </p>
-                        {% else %}
-                            </p>
-                        {% endif %}
-                        <br>
-                    {% endfor %}
-                </div>
-            </div>
-
-                <hr>
-                {% if size_team1 < game_detail.team_players and entered == 0 %}
-                    
-                    <a class="icon plus" href="{% url 'enter_game_team1' pk=game_detail.pk %}">
-                        <span class="icon is-large is-fixed-bottom is-size-1">
-                            <i class="fas fa-plus-circle"></i>
-                        </span>
-                    </a>
-                {% endif %}
-
-            {% endif %}
-            {% if entered == 1 %}
-            <br><br><br>
-            {% url 'game_chat' as game_chat_url %}
-            {% include 'games/chat.html' with game_chat=game_chat %}
-            <hr>
-                {% include 'games/send_message_chat.html' %}
-            {% endif %}
-
-        {% else %}
-            <p>You are not logged in</p>
-        {% endif %}
-    </div>
+        </div>
 {% endblock %}
 
 

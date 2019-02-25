@@ -3,19 +3,19 @@
 {% block content %}
 
   {% load staticfiles %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/edit_email.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/edit_phone_number.css' %}">
 
 
-  <div class="container">
+  <div class="container edit">
 
-    <h2>Alterar Email</h2>
+    <h2>Alterar Telefone</h2>
     <hr>
     {% if user.is_authenticated %}
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <label>Email</label><br>
-            {{ form.email.errors }}
-            {{ form.email }}
+            <label>Telefone</label><br>
+            {{ form.phone_number.errors }}
+            {{ form.phone_number }}
             <br>
             <br>
             <button type="submit">Alterar</button>

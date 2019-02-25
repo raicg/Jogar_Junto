@@ -2,14 +2,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('signup/', views.new_user, name='signup'),
-    path('signup/success/', views.new_user_success, name='signup_success'),
-    path('photo/success/', views.photo_success, name='photo_success'),
-    path('add/photo/', views.add_photo, name='add_photo'),
-    path('user/<int:pk>/', views.user_detail, name='user_details'),
+    path('signup/', views.newUser, name='signup'),
+    path('signup/success/', views.newUserSuccess, name='signupSuccess'),
+    path('photo/success/', views.photoSuccess, name='photoSuccess'),
+    path('add/photo/', views.addPhoto, name='addPhoto'),
+    path('user/<int:pk>/', views.userDetail, name='userDetails'),
     path('login/successful', views.login, name='login_successful'),
-    path('user/edit_name', views.edit_name, name='user_edit_name'),
-    path('user/edit_email', views.edit_email, name='user_edit_email'),
-    path('user/edit_phone_number', views.edit_phone_number, name='user_edit_phone_number'),
-    path('user/edit_photo', views.add_photo, name='user_edit_photo'),
-]
+    path('user/edit_name', views.editName, name='userEditName'),
+    path('user/edit_email', views.editEmail, name='userEditEmail'),
+    path('user/edit_phone_number', views.editPhoneNumber, name='userEditPhoneNumber'),
+    path('user/edit_photo', views.addPhoto, name='userEditPhoto'),
+] 
